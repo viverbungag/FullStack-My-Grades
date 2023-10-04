@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import TableRow from './components/atoms/TableRow';
+import TableHead from './components/atoms/TableHead';
+import TableData from './components/atoms/TableData';
+import TableRowData from './components/atoms/TableRowData';
+import InputText from './components/atoms/InputText';
 
 const grades = [{
   label: "A",
@@ -108,10 +113,7 @@ function App() {
       <div className=" flex flex-col gap-12 p-8 border-r-2 border-black">
         <div className="flex flex-col gap-4 items-end">
           {inputFields.map((field, idx) => (
-            <div key={idx + field.type + field.name} className="flex gap-4">
-              <span>{field.label}</span>
-              <input type={field.type} value={userInput[field.name]} onChange={inputOnChange} name={field.name} />
-            </div>
+            <InputText key={idx + field.type + field.name} type={field.type} value={userInput[field.name]} onChange={inputOnChange} name={field.name} label={field.label}/>
           ))}
         </div>
         <div className="flex gap-4">
@@ -137,23 +139,23 @@ function App() {
           </div>
           <table className="table-auto w-full">
             <thead>
-              <tr className="bg-gray-200">
-                <th className="px-4 py-2 text-left text-gray-600 uppercase font-medium tracking-wider">Course No.</th>
-                <th className="px-4 py-2 text-left text-gray-600 uppercase font-medium tracking-wider">Course Name</th>
-                <th className="px-4 py-2 text-left text-gray-600 uppercase font-medium tracking-wider">Units</th>
-                <th className="px-4 py-2 text-left text-gray-600 uppercase font-medium tracking-wider">Grade</th>
-              </tr>
+              <TableRow>
+                <TableHead>Course No.</TableHead>
+                <TableHead>Course Name</TableHead>
+                <TableHead>Units</TableHead>
+                <TableHead>Grade</TableHead>
+              </TableRow>
             </thead>
             <tbody>
               {courses
                 .filter(({ courseName, courseNo }) => courseName.toLowerCase().includes(searchInput.toLowerCase()) || String(courseNo).toLowerCase().includes(searchInput.toLowerCase()))
                 .map((course, idx) => (
-                  <tr key={idx + course.courseNo + course.courseName + course.units + course.grade} className='bg-gray-100'>
-                    <td className="border px-4 py-2 text-gray-800">{course.courseNo}</td>
-                    <td className="border px-4 py-2 text-gray-800">{course.courseName}</td>
-                    <td className="border px-4 py-2 text-gray-800">{course.units}</td>
-                    <td className="border px-4 py-2 text-gray-800">{course.grade}</td>
-                  </tr>
+                  <TableRowData key={idx + course.courseNo + course.courseName + course.units + course.grade}>
+                    <TableData>{course.courseNo}</TableData>
+                    <TableData>{course.courseName}</TableData>
+                    <TableData>{course.units}</TableData>
+                    <TableData>{course.grade}</TableData>
+                  </TableRowData>
                 ))}
             </tbody>
           </table>
